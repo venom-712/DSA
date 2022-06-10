@@ -39,6 +39,33 @@ class BinaryTree{
             return ans;
 
         }
+
+        // pair of <diameter,height>
+        pair<int,int> diameterUsingPair(Node* root){
+            if(root == NULL){
+                return {0,0};
+            }
+            int opt1 = diameterUsingPair(root->left).first;
+            int opt2 = diameterUsingPair(root->right).first;
+            int opt3 = diameterUsingPair(root->left).second + diameterUsingPair(root->right).second + 1;
+
+            pair<int,int> ans;
+            ans.first = max(max(opt1,opt2),opt3);
+            ans.second = 1 + max(diameterUsingPair(root->left).second,diameterUsingPair(root->right).second);
+            return ans;
+        }
+
+        int optimisedDiameter(Node* root,int &maxi){
+            if(root == NULL){
+                return 0;
+            }
+
+            int lh = optimisedDiameter(root->left,maxi);
+            int rh = optimisedDiameter(root->right,maxi);
+            maxi = max(maxi,lh+rh+1);
+
+            return 1 + max(lh,rh);
+        }
 };
 
 int main(){
@@ -51,9 +78,12 @@ int main(){
     root->left->right = new Node(5);
     root->right->right = new Node(6);
     root->left->right->left = new Node(7);
+    root->left->right->left->left = new Node(8);
 
     BinaryTree b;
-    cout<<"Diameter of tree is : "<<b.diameter(root)<<endl;
+    // int maxi = 0;
+    // b.optimisedDiameter(root,maxi);
+    cout<<"Diameter of tree is : "<<b.diameterUsingPair(root).first<<endl;
 
     return 0;
 }

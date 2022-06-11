@@ -70,6 +70,17 @@ class BinaryTree{
 
 int main(){
 
+
+    //         1
+    //       /   \
+    //     2       3
+    //    / \       \
+    //   4   5       6
+    //      / 
+    //     7
+    //    /
+    //   8
+
     Node* root = NULL;
     root = new Node(1);
     root->left = new Node(2);
